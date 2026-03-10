@@ -1,113 +1,129 @@
-# 🕵️ SPY GAME — Railway Deployment Guide
+# 🕵️ COVERT — Spy Social Deduction Game
 
-A real-time multiplayer spy party game built with FastAPI + Socket.IO.
+A browser-based multiplayer spy game with a futuristic cyberpunk UI.
+Built with **Python + Flask-SocketIO** backend and vanilla **HTML/CSS/JS** frontend.
 
 ---
 
-## 📁 Folder Structure
+## 📁 File Structure
 
 ```
 spy-game/
-├── server/
-│   ├── main.py           ← FastAPI + Socket.IO server
-│   ├── game_manager.py   ← Game logic
-│   ├── storage.py        ← JSON persistence (/tmp/games.json)
-│   ├── games.json        ← Template (runtime data goes to /tmp)
-│   └── requirements.txt  ← Python dependencies
+├── server.py          # Flask + SocketIO backend
+├── requirements.txt   # Python dependencies
+├── games.json         # Auto-created on first run
 └── client/
-    ├── index.html        ← Single-page frontend
-    ├── style.css         ← Dark cyberpunk UI
-    └── app.js            ← Socket.IO client logic
+    └── index.html     # Full frontend (HTML + CSS + JS)
 ```
 
 ---
 
-## 🚀 Deploying to Railway
+## ⚙️ Requirements
 
-### 1. Push to GitHub
-
-```bash
-git init
-git add .
-git commit -m "Initial spy game"
-git remote add origin https://github.com/YOUR_USER/spy-game.git
-git push -u origin main
-```
-
-### 2. Create Railway Project
-
-1. Go to [railway.com](https://railway.com) → **New Project**
-2. Select **Deploy from GitHub repo**
-3. Choose your repository
-
-### 3. Configure the Service
-
-In Railway → your service → **Settings**:
-
-| Setting | Value |
-|---------|-------|
-| **Root Directory** | `server` |
-| **Start Command** | `uvicorn main:socket_app --host 0.0.0.0 --port $PORT` |
-
-### 4. Environment Variables
-
-Railway automatically injects `PORT`. No additional env vars required.
-
-| Variable | Value | Notes |
-|----------|-------|-------|
-| `PORT`   | (auto) | Set by Railway automatically |
-
-### 5. Generate Domain
-
-In Railway → **Settings → Networking** → **Generate Domain**
-
-Railway provides free HTTPS automatically (e.g. `your-app.up.railway.app`).
+- **Python 3.8+**
+- pip
 
 ---
 
-## 🛠 Running Locally
+## 🚀 Quick Start
 
+### 1. Clone / download the project
 ```bash
-cd server
+cd spy-game
+```
+
+### 2. (Recommended) Create a virtual environment
+```bash
+python -m venv venv
+
+# macOS / Linux
+source venv/bin/activate
+
+# Windows
+venv\Scripts\activate
+```
+
+### 3. Install dependencies
+```bash
 pip install -r requirements.txt
-
-# Start on port 8000
-uvicorn main:socket_app --host 0.0.0.0 --port 8000
-
-# Open http://localhost:8000
 ```
+
+### 4. Run the server
+```bash
+python server.py
+```
+
+### 5. Open the game
+Visit **http://localhost:5050** in your browser.
 
 ---
 
 ## 🎮 How to Play
 
-1. **Host** enters their codename + a secret word → clicks **CREATE GAME**
-2. Share the 6-character game code with friends
-3. Players enter the code → click **JOIN GAME**
-4. Host clicks **START MISSION** (min. 2 players, max 10)
-5. One random player becomes **THE SPY** — they don't see the secret word
-6. Players discuss and try to identify the spy
-7. Host clicks **REVEAL SPY** to end the round
-8. Host can start a **NEW ROUND** (same players, new word)
+### Setup
+1. One player opens the site and clicks **Create New Game**
+2. A 6-character **Game ID** appears — share it with friends
+3. Other players enter their name + the Game ID and click **Join Game**
+4. All players appear in the lobby in real-time (min 3, max 10)
+
+### Starting a Round
+1. The **Host** sees the control panel
+2. Host selects a **Spy** from the dropdown
+3. Host types a **Secret Word** (e.g. "Pizza")
+4. Host clicks **Start Round**
+
+### Roles
+- **Agents** see: their secret word glowing on screen
+- **The Spy** sees: "You are the spy." — they don't know the word
+
+### In Real Life (no app needed)
+- Everyone says one word or phrase that hints at the secret word (without saying it)
+- Players vote on who they think the spy is
+- The spy tries to blend in without knowing the word
+
+### New Round
+- Host clicks **New Round** to reset
+- Same players stay — choose a new spy and word
 
 ---
 
-## ⚙️ Railway-Specific Notes
+## 🌐 Multiplayer on a Local Network
 
-- **Port**: Server reads `$PORT` env var (Railway injects this automatically)
-- **Socket.IO path**: Client uses relative `/socket.io` — no hardcoded URLs
-- **Storage**: Game data saved to `/tmp/games.json` (ephemeral, resets on redeploy)
-- **HTTPS**: Provided automatically by Railway — no config needed
-- **Static files**: Served by FastAPI from the `client/` directory
+To let other devices on your WiFi join:
+
+1. Find your local IP:
+   - macOS/Linux: `ifconfig | grep "inet "`
+   - Windows: `ipconfig`
+2. Share: `http://YOUR_LOCAL_IP:5050`
+3. Other devices on the same network can join
 
 ---
 
-## 📦 Dependencies
+## 🔧 Dependencies
 
-```
-fastapi==0.115.5
-uvicorn[standard]==0.32.1
-python-socketio==5.11.4
-python-engineio==4.10.1
-aiohttp==3.11.10
-```
+| Package         | Version  | Purpose                        |
+|----------------|----------|--------------------------------|
+| flask           | ≥3.0.0   | Web framework                  |
+| flask-socketio  | ≥5.3.6   | WebSocket / real-time events   |
+| eventlet        | ≥0.35.2  | Async server for SocketIO      |
+
+---
+
+## 🎨 Tech Stack
+
+| Layer     | Tech                        |
+|-----------|-----------------------------|
+| Backend   | Python · Flask · Flask-SocketIO |
+| Frontend  | HTML · CSS · Vanilla JS     |
+| Storage   | JSON file (games.json)      |
+| Real-time | WebSockets via Socket.IO    |
+| Fonts     | Orbitron · Share Tech Mono · Exo 2 |
+
+---
+
+## 💡 Notes
+
+- No database needed — all state lives in `games.json`
+- If the host disconnects, the next player becomes host automatically
+- Empty rooms are cleaned up automatically on disconnect
+- Works on mobile browsers — fully responsive
