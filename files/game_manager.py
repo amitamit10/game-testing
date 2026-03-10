@@ -14,7 +14,7 @@ def generate_game_id(length: int = 6) -> str:
     """Generate a short, readable game code."""
     return "".join(random.choices(string.ascii_uppercase + string.digits, k=length))
 
-
+#ddddd
 def create_game(host_name: str, secret_word: str, host_socket_id: str) -> dict:
     """Create a new game and return game state."""
     game_id = generate_game_id()
