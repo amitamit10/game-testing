@@ -1,0 +1,36 @@
+{
+  "FGVXJ9": {
+    "game_id": "FGVXJ9",
+    "host_id": "dsLWtAyyZgp5B66TAAAB",
+    "status": "playing",
+    "players": [
+      {
+        "id": "dsLWtAyyZgp5B66TAAAB",
+        "name": "amit",
+        "is_host": true,
+        "joined_at": "2026-03-09T23:44:07.078563"
+      },
+      {
+        "id": "O12X4hfI0YM-esOEAAAD",
+        "name": "amit1",
+        "is_host": false,
+        "joined_at": "2026-03-09T23:44:23.803996"
+      },
+      {
+        "id": "WAPoeF00yK6ESaRPAAAF",
+        "name": "sfsd",
+        "is_host": false,
+        "joined_at": "2026-03-09T23:44:53.569763"
+      },
+      {
+        "id": "bjfDS_9hzRZHi_eRAAAH",
+        "name": "FGVXJ9",
+        "is_host": false,
+        "joined_at": "2026-03-09T23:45:03.229328"
+      }
+    ],
+    "spy": "amit1",
+    "word": "dd",
+    "round": 1
+  }
+}
