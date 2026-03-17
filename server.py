@@ -5,7 +5,7 @@ import string
 from datetime import datetime
 from flask import Flask, request, send_from_directory
 from flask_socketio import SocketIO, join_room, leave_room, emit
-
+print("")
 app = Flask(__name__, static_folder="client")
 app.config["SECRET_KEY"] = "spy-game-secret-2024"
 socketio = SocketIO(app, cors_allowed_origins="*", logger=False, engineio_logger=False)
